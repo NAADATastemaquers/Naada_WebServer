@@ -33,8 +33,6 @@ class Residents(Resource):
         }
         return artist, 200
 
-
-<<<<<<< HEAD
 class Register(Resource):
     def post(self):
         data = request.get_json()
