@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api ,request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -32,6 +32,9 @@ class Residents(Resource):
             "artist_shows":result['artist_shows']
         }
         return artist, 200
+
+    def post(self):
+        data = request.get_json();
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
