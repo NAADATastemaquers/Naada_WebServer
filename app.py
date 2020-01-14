@@ -44,7 +44,7 @@ class Register(Resource):
         newUser = {
             "username": username,
             "password": password,
-            "name": email
+            "email": email
         }
         if result != 0:
             objId = db.naada_users.insert_one(newUser).inserted_id
