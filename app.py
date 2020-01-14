@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ class Residents(Resource):
                 })
             return artist,200
         #return selected artist
-        result = db.naada_artists.find_one({"_id": id})
+        result = db.naada_artists.find_one({"_id": ObjectId(id)})
         artist = {
             "artist": result['artist'],
             "artist_img": result['artist_img'],
