@@ -53,8 +53,9 @@ class Register(Resource):
             objId = db.Users.find_one({"username": username, "password": password, "name": name})
             id = str(objId["_id"])
             return {"result": "not registered user already present", "id": id}, 201
-        
+
 api.add_resource(Residents, '/residents', '/residents/<id>')
+api.add_resource(Register, '/register')
 
 if __name__ == '__main__':
     app.run(debug=True)
