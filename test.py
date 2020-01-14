@@ -1,16 +1,16 @@
-from pymongo import MongoClient
+from flask import Flask
+from flask_restful import Resource, Api
+app = Flask(__name__)
+api = Api(app)
+class People(Resource):
 
-client = MongoClient()
-client = MongoClient('mongodb+srv://admin:admin@cluster0-ueieq.mongodb.net/test?retryWrites=true&w=majority')
-db = client['naada']
+    def get(self, id=None):
+        if not id:
+            return {'name': 'John Doe'}
+        return [{'name': 'John Doe'}, {'name': 'Mary Canary'}]
 
-artists = []
-result = db.naada_artists.find({})
-for artist in result:
-    artists.append({
-        "artist": artist['artist'],
-        "artist_img": artist['artist_img'],
-        "artist_desc": artist['artist_desc']
-    })
 
-print(artists)
+api.add_resource(People, '/api/people', '/api/people/<id>')
+
+if __name__ == '__main__':
+    app.run(debug=True)

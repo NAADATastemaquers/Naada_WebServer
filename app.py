@@ -12,28 +12,29 @@ db = client['naada']
 
 
 class Residents(Resource):
-    def get(self,id = None):
+    def get(self, id=None):
         if not id:
+            print("here")
             artists = []
             result = db.naada_artists.find({})
             for artist in result:
                 artists.append({
-                    "artist":artist['artist'],
-                    "artist_img":artist['artist_img'],
-                    "artist_desc":artist['artist_desc']
+                    "artist": artist['artist'],
+                    "artist_img": artist['artist_img'],
+                    "artist_desc": artist['artist_desc']
                 })
-            return artist,200
-        #return selected artist
+            return artist, 200
+        # return selected artist
         result = db.naada_artists.find_one({"_id": ObjectId(id)})
         artist = {
             "artist": result['artist'],
             "artist_img": result['artist_img'],
             "artist_desc": result['artist_desc']
         }
-        return artist,200
+        return artist, 200
 
 
-api.add_resource(Residents, '/residents/<string:id>')
+api.add_resource(Residents, '/residents', '/residents/<id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
