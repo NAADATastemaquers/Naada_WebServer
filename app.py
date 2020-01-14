@@ -33,6 +33,10 @@ class Residents(Resource):
         }
         return artist, 200
 
+class UserDetails(Resource):
+    def get(self):
+        
+
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
 
