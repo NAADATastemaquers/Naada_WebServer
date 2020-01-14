@@ -29,16 +29,21 @@ class Residents(Resource):
             "artist": result['artist'],
             "artist_img": result['artist_img'],
             "artist_desc": result['artist_desc'],
-            "artist_shows":result['artist_shows']
+            "artist_shows": result['artist_shows']
         }
         return artist, 200
 
+
 class UserDetails(Resource):
-    def get(self):
-        
+    def get(self, userID):
+        user = db.naada_users.find_one({"_id": ObjectId(userID)})
+        username = user['username']
+        email = user['email']
+        return {"username": username, "email": email}, 200
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
+api.add_resource(UserDetails, '/userdetails/<string:userID>')
 
 if __name__ == '__main__':
     app.run(debug=True)
