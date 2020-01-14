@@ -28,7 +28,8 @@ class Residents(Resource):
         artist = {
             "artist": result['artist'],
             "artist_img": result['artist_img'],
-            "artist_desc": result['artist_desc']
+            "artist_desc": result['artist_desc'],
+            "artist_shows":result['artist_shows']
         }
         return artist, 200
 
