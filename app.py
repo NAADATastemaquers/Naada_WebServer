@@ -34,6 +34,7 @@ class Residents(Resource):
         return artist, 200
 
 
+<<<<<<< HEAD
 class Register(Resource):
     def post(self):
         data = request.get_json()
@@ -63,9 +64,18 @@ def check_func(data):
     for result in results:
         return 0
 
+class UserDetails(Resource):
+    def get(self, userID):
+        user = db.naada_users.find_one({"_id": ObjectId(userID)})
+        username = user['username']
+        email = user['email']
+        return {"username": username, "email": email}, 200
+
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
+api.add_resource(UserDetails, '/userdetails/<string:userID>')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
