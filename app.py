@@ -35,6 +35,13 @@ class Residents(Resource):
 
     def post(self):
         data = request.get_json();
+        newResident = {
+            "artist": data["artist"],
+            "artist_img": data["artist_img"],
+            "artist_desc": data["artist_desc"],
+            "artist_shows": data["artist_shows"]
+        }
+        print(newResident)
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
