@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_restful import Resource, Api
-
+from pymongo import MongoClient
 
 app = Flask(__name__)
 api = Api(app)
 
+client = MongoClient()
+client = MongoClient('mongodb://localhost:27017/')
 
 class HelloWorld(Resource):
     def get(self):
