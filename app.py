@@ -33,7 +33,27 @@ class Residents(Resource):
         }
         return artist, 200
 
-
+class Register(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+        name = data['name']
+        result = check_func(data)
+        newUser = {
+            "username": username,
+            "password": password,
+            "name": name
+        }
+        if result != 0:
+            objId = db.Users.insert_one(newUser).inserted_id
+            id = str(objId)
+            return {"id": id}, 201
+        else:
+            objId = db.Users.find_one({"username": username, "password": password, "name": name})
+            id = str(objId["_id"])
+            return {"result": "not registered user already present", "id": id}, 201
+        
 api.add_resource(Residents, '/residents', '/residents/<id>')
 
 if __name__ == '__main__':
