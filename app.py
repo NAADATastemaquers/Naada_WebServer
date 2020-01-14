@@ -6,7 +6,7 @@ app = Flask(__name__)
 api = Api(app)
 
 client = MongoClient()
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://admin:admin@cluster0-ueieq.mongodb.net/test?retryWrites=true&w=majority')
 
 class HelloWorld(Resource):
     def get(self):
