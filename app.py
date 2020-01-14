@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api ,request
+from flask_restful import Resource, Api, request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -29,39 +29,40 @@ class Residents(Resource):
             "artist": result['artist'],
             "artist_img": result['artist_img'],
             "artist_desc": result['artist_desc'],
-            "artist_shows":result['artist_shows']
+            "artist_shows": result['artist_shows']
         }
         return artist, 200
+
 
 class Register(Resource):
     def post(self):
         data = request.get_json()
         username = data['username']
         password = data['password']
-        name = data['name']
+        email = data['email']
         result = check_func(data)
         newUser = {
             "username": username,
             "password": password,
-            "name": name
+            "name": email
         }
         if result != 0:
-            objId = db.Users.insert_one(newUser).inserted_id
+            objId = db.naada_users.insert_one(newUser).inserted_id
             id = str(objId)
             return {"id": id}, 201
         else:
-            objId = db.Users.find_one({"username": username, "password": password, "name": name})
+            objId = db.naada_users.find_one({"username": username, "password": password, "email": email})
             id = str(objId["_id"])
             return {"result": "not registered user already present", "id": id}, 201
 
 
-
 def check_func(data):
-    results = db.Users.find({"username": data['username'], "password": data['password'], "name": data['name']})
+    results = db.naada_users.find({"username": data['username'], "email": data['email'], "password": data['password']})
     if results.count() is 0:
         return 1
     for result in results:
         return 0
+
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
