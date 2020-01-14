@@ -7,6 +7,7 @@ api = Api(app)
 
 client = MongoClient()
 client = MongoClient('mongodb+srv://admin:admin@cluster0-ueieq.mongodb.net/test?retryWrites=true&w=majority')
+db = client['naada']
 
 class HelloWorld(Resource):
     def get(self):
