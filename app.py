@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api, request
+from flask_restful import Resource, Api ,request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -32,6 +32,7 @@ class Residents(Resource):
             "artist_shows": result['artist_shows']
         }
         return artist, 200
+
 
 class Register(Resource):
     def post(self):
@@ -68,6 +69,19 @@ class UserDetails(Resource):
         username = user['username']
         email = user['email']
         return {"username": username, "email": email}, 200
+
+
+    def post(self):
+        data = request.get_json();
+        newResident = {
+            "artist": data["artist"],
+            "artist_img": data["artist_img"],
+            "artist_desc": data["artist_desc"],
+            "artist_shows": data["artist_shows"]
+        }
+        objId = db.naada_artists.insert_one(newResident)
+        return {"success": "created new resident"}, 200
+
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
