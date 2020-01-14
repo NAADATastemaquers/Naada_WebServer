@@ -41,7 +41,8 @@ class Residents(Resource):
             "artist_desc": data["artist_desc"],
             "artist_shows": data["artist_shows"]
         }
-        print(newResident)
+        objId = db.naada_artists.insert_one(newResident)
+        return {"success": "created new resident"}, 200
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
