@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api ,request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -53,6 +53,15 @@ class Register(Resource):
             objId = db.Users.find_one({"username": username, "password": password, "name": name})
             id = str(objId["_id"])
             return {"result": "not registered user already present", "id": id}, 201
+
+
+
+def check_func(data):
+    results = db.Users.find({"username": data['username'], "password": data['password'], "name": data['name']})
+    if results.count() is 0:
+        return 1
+    for result in results:
+        return 0
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
