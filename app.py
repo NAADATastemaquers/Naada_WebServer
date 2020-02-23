@@ -83,9 +83,6 @@ class UserDetails(Resource):
         return {"success": "created new resident"}, 200
 
 
-
-
-
 class Message(Resource):
     def get(self, index):
         if index != 0:
@@ -107,14 +104,14 @@ class Message(Resource):
                 })
             return toSend, 200
 
-    def post(self):
+    def post(self, index):
         data = request.get_json()
         newMessage = {
             "message": data["message"],
             "sender": data["sender"]
         }
         objId = db.naada_message.insert_one(newMessage)
-        return {"success": "created new resident"}, 200
+        return {"success": "added new message"}, 200
 
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
