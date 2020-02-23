@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api ,request
+from flask_restful import Resource, Api, request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -63,13 +63,13 @@ def check_func(data):
     for result in results:
         return 0
 
+
 class UserDetails(Resource):
     def get(self, userID):
         user = db.naada_users.find_one({"_id": ObjectId(userID)})
         username = user['username']
         email = user['email']
         return {"username": username, "email": email}, 200
-
 
     def post(self):
         data = request.get_json();
@@ -83,11 +83,18 @@ class UserDetails(Resource):
         return {"success": "created new resident"}, 200
 
 
+class Message(Resource):
+    def get(self, index):
+        if index != 0:
+            all_messages = db.naada_message.find()
+            toSend = []
+            for message in all_messages:
+                
+
 
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
 api.add_resource(UserDetails, '/userdetails/<string:userID>')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
