@@ -85,8 +85,8 @@ class UserDetails(Resource):
 
 class Message(Resource):
     def get(self, index):
-        if index != 0:
-            all_messages = db.naada_message.find()
+        if int(index) != 0:
+            all_messages = db.naada_message.find().limit(int(index))
             toSend = []
             for message in all_messages:
                 toSend.append({
@@ -95,7 +95,7 @@ class Message(Resource):
                 })
             return toSend, 200
         else:
-            all_messages = db.naada_message.find().limit(index)
+            all_messages = db.naada_message.find()
             toSend = []
             for message in all_messages:
                 toSend.append({
