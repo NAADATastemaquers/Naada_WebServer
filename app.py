@@ -118,6 +118,7 @@ class Message(Resource):
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
 api.add_resource(UserDetails, '/userdetails/<string:userID>')
+api.add_resource(Message, '/message/<string:index>')
 
 if __name__ == '__main__':
     app.run(debug=True)
