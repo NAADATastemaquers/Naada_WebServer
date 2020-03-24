@@ -1,11 +1,19 @@
+from datetime import date, datetime
 
-from pymongo import MongoClient
+from json import dumps
 
 
 
-client = MongoClient()
-client = MongoClient('mongodb+srv://admin:admin@cluster0-ueieq.mongodb.net/test?retryWrites=true&w=majority')
-db = client['naada']
-result = db.naada_artists.find()
-for r in result:
-    print(r)
+
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
+
+
+
+
+
+print(dumps(datetime.now(), default=json_serial))

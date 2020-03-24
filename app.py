@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, request
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+from datetime import datetime
 
 app = Flask(__name__)
 api = Api(app)
@@ -91,16 +92,22 @@ class Message(Resource):
             for message in all_messages:
                 toSend.append({
                     'message': message['message'],
-                    'sender': message['sender']
+                    'sender': message['sender'],
+                    'timestamp': str(message['timestamp'])
                 })
             return toSend, 200
         else:
             all_messages = db.naada_message.find()
             toSend = []
             for message in all_messages:
+                if message['timestamp'] is None:
+                    date = 'no timestamp'
+                else:
+                    date = message['timestamp']
                 toSend.append({
                     'message': message['message'],
-                    'sender': message['sender']
+                    'sender': message['sender'],
+                    'timestamp': str(date)
                 })
             return toSend, 200
 
@@ -108,7 +115,8 @@ class Message(Resource):
         data = request.get_json()
         newMessage = {
             "message": data["message"],
-            "sender": data["sender"]
+            "sender": data["sender"],
+            "timestamp": datetime.now()
         }
         objId = db.naada_message.insert_one(newMessage)
         return {"success": "added new message"}, 200
