@@ -93,7 +93,7 @@ class Message(Resource):
                 toSend.append({
                     'message': message['message'],
                     'sender': message['sender'],
-                    'timestamp':message['timestamp']
+                    'timestamp': str(message['timestamp'])
                 })
             return toSend, 200
         else:
