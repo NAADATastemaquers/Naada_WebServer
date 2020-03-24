@@ -100,14 +100,14 @@ class Message(Resource):
             all_messages = db.naada_message.find()
             toSend = []
             for message in all_messages:
-                if message['timestamp'] == 0:
+                if message['timestamp'] is None:
                     date = 'no timestamp'
                 else:
                     date = message['timestamp']
                 toSend.append({
                     'message': message['message'],
                     'sender': message['sender'],
-                    'timestamp': date
+                    'timestamp': str(date)
                 })
             return toSend, 200
 
@@ -116,7 +116,7 @@ class Message(Resource):
         newMessage = {
             "message": data["message"],
             "sender": data["sender"],
-            "timestamp" : datetime.now()
+            "timestamp": datetime.now()
         }
         objId = db.naada_message.insert_one(newMessage)
         return {"success": "added new message"}, 200
