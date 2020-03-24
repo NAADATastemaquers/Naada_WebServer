@@ -21,7 +21,8 @@ class Residents(Resource):
                 artists.append({
                     "artist": artist['artist'],
                     "artist_img": artist['artist_img'],
-                    "artist_desc": artist['artist_desc']
+                    "artist_desc": artist['artist_desc'],
+                    "artist_id": str(artist['_id'])
                 })
             return artists, 200
         # return selected artist
