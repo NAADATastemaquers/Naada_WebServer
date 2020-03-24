@@ -100,10 +100,14 @@ class Message(Resource):
             all_messages = db.naada_message.find()
             toSend = []
             for message in all_messages:
+                if message['timestamp'] == 0:
+                    date = 'no timestamp'
+                else:
+                    date = message['timestamp']
                 toSend.append({
                     'message': message['message'],
                     'sender': message['sender'],
-                    'timestamp': message['timestamp']
+                    'timestamp': date
                 })
             return toSend, 200
 
