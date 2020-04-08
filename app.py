@@ -135,11 +135,11 @@ class Favorite(Resource):
                     "song_url": data["song_url"],
                     "song_img": data["song_img"]
                 })
-        return all_fav,200
+        return all_fav, 200
 
-    def post(self):
+    def post(self, userID):
         data = request.get_json()
-        fav_data ={
+        fav_data = {
             "userID": data["userID"],
             "song_name": data["song_name"],
             "song_url": data["song_url"],
@@ -149,13 +149,11 @@ class Favorite(Resource):
         return {"success": "added new favorite song"}, 200
 
 
-
-
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
 api.add_resource(UserDetails, '/userdetails/<string:userID>')
 api.add_resource(Message, '/message/<string:index>')
-api.add_resource(Favorite, '/favorite/<string:index>')
+api.add_resource(Favorite, '/favorite/<string:userID>')
 
 if __name__ == '__main__':
     app.run(debug=True)
