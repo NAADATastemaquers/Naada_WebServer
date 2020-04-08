@@ -123,6 +123,34 @@ class Message(Resource):
         return {"success": "added new message"}, 200
 
 
+class Favorite(Resource):
+    def get(self, userID):
+        if userID is not str(0):
+            all_fav = []
+            data = db.user_fav.find({"_id": ObjectId(userID)})
+            for dat in data:
+                all_fav.append({
+                    "userID": data["userID"],
+                    "song_name": data["song_name"],
+                    "song_url": data["song_url"],
+                    "song_img": data["song_img"]
+                })
+        return all_fav,200
+
+    def post(self):
+        data = request.get_json()
+        fav_data ={
+            "userID": data["userID"],
+            "song_name": data["song_name"],
+            "song_url": data["song_url"],
+            "song_img": data["song_img"]
+        }
+        objId = db.user_fav.insert_one(fav_data)
+        return {"success": "added new favorite song"}, 200
+
+
+
+
 api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
 api.add_resource(UserDetails, '/userdetails/<string:userID>')
