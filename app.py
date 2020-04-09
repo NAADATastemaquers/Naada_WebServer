@@ -125,17 +125,18 @@ class Message(Resource):
 
 class Favorite(Resource):
     def get(self, userID):
-        if userID is not str(0):
+        if len(userID) is not 0:
             all_fav = []
-            data = db.user_fav.find({"_id": ObjectId(userID)})
+            data = db.user_fav.find({"userID": userID})
             for dat in data:
                 all_fav.append({
-                    "userID": data["userID"],
-                    "song_name": data["song_name"],
-                    "song_url": data["song_url"],
-                    "song_img": data["song_img"]
+                    "userID": dat["userID"],
+                    "song_name": dat["song_name"],
+                    "song_url": dat["song_url"],
+                    "song_img": dat["song_img"]
                 })
-        return all_fav, 200
+            print(all_fav)
+            return all_fav, 200
 
     def post(self, userID):
         data = request.get_json()
