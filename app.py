@@ -124,10 +124,10 @@ class Message(Resource):
 
 
 class Favorite(Resource):
-    def get(self, userID):
+    def get(self, email):
         if len(userID) is not 0:
             all_fav = []
-            data = db.user_fav.find({"userID": userID})
+            data = db.user_fav.find({"userID": email})
             for dat in data:
                 all_fav.append({
                     "userID": dat["userID"],
@@ -135,13 +135,12 @@ class Favorite(Resource):
                     "song_url": dat["song_url"],
                     "song_img": dat["song_img"]
                 })
-            print(all_fav)
             return all_fav, 200
 
-    def post(self, userID):
+    def post(self, email):
         data = request.get_json()
         fav_data = {
-            "userID": data["userID"],
+            "email": data["email"],
             "song_name": data["song_name"],
             "song_url": data["song_url"],
             "song_img": data["song_img"]
@@ -154,7 +153,7 @@ api.add_resource(Residents, '/residents', '/residents/<id>')
 api.add_resource(Register, '/register')
 api.add_resource(UserDetails, '/userdetails/<string:userID>')
 api.add_resource(Message, '/message/<string:index>')
-api.add_resource(Favorite, '/favorite/<string:userID>')
+api.add_resource(Favorite, '/favorite/<string:email>')
 
 if __name__ == '__main__':
     app.run(debug=True)
