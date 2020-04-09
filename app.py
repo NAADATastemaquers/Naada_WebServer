@@ -125,16 +125,17 @@ class Message(Resource):
 
 class Favorite(Resource):
     def get(self, email):
-        if len(userID) is not 0:
+        if len(email) is not 0:
             all_fav = []
-            data = db.user_fav.find({"userID": email})
+            data = db.user_fav.find({"email": email})
             for dat in data:
                 all_fav.append({
-                    "userID": dat["userID"],
+                    "email": dat["email"],
                     "song_name": dat["song_name"],
                     "song_url": dat["song_url"],
                     "song_img": dat["song_img"]
                 })
+            print(all_fav)
             return all_fav, 200
 
     def post(self, email):
