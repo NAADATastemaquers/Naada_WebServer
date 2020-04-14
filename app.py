@@ -35,6 +35,17 @@ class Residents(Resource):
         }
         return artist, 200
 
+    def post(self):
+        data = request.get_json()
+        resident = {
+            "artist": data['artist'],
+            "artist_img": data['artist_img'],
+            "artist_desc": data['artist_desc']
+        }
+        result = db.naada_artists.insert_one(resident)
+        if result:
+            return {"success":"Entered new User"},200
+
 
 class Register(Resource):
     def post(self):
